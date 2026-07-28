@@ -181,3 +181,6 @@ Antares.vcxproj.user
 # Python bytecode from the recon tooling
 __pycache__/
 *.pyc
+
+/.vs/
+.gitignore
