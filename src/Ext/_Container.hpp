@@ -275,17 +275,41 @@ protected:
 
 public:
 	value_type FindOrAllocate(key_type key) {
-		if(auto const ptr = this->Items.find(key)) {
-			return ptr;
+		auto ptr = this->Items.find(key);
+		if(!ptr) {
+			ptr = this->Items.insert(key, new extension_type(key));
 		}
-		return this->Items.insert(key, new extension_type(key));
+		if constexpr(requires { T::ExtPointerOffset; }) {
+			// LoadKey also comes through here after the engine has loaded the
+			// object's raw bytes: always replace any pointer from the savegame.
+			*reinterpret_cast<value_type*>(reinterpret_cast<BYTE*>(key)
+				+ T::ExtPointerOffset) = ptr;
+		}
+		return ptr;
 	}
 
 	value_type Find(const_key_type key) const {
+		if constexpr(requires { T::ExtPointerOffset; }) {
+			return key ? *reinterpret_cast<value_type const*>(
+				reinterpret_cast<BYTE const*>(key) + T::ExtPointerOffset) : nullptr;
+		} else {
+			return this->FindInMap(key);
+		}
+	}
+
+	// Some engine ObjectType hooks accept non-Techno types too. Those
+	// callers must use the registry rather than reading a Techno-only slot.
+	value_type FindInMap(const_key_type key) const {
 		return this->Items.find(key);
 	}
 
 	void Remove(const_key_type key) {
+		if constexpr(requires { T::ExtPointerOffset; }) {
+			if(key) {
+				*reinterpret_cast<value_type*>(reinterpret_cast<BYTE*>(
+					const_cast<base_type*>(key)) + T::ExtPointerOffset) = nullptr;
+			}
+		}
 		delete this->Items.remove(key);
 	}
 

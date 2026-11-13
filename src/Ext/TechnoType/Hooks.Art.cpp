@@ -24,7 +24,7 @@ DEFINE_HOOK(0x5F9634, ObjectTypeClass_LoadFromINI, 0x6)
 	GET_STACK(CCINIClass *, pINI, STACK_OFFS(0x1B0, -4));
 
 	TechnoTypeClass *pTechnoType = static_cast<TechnoTypeClass *>(pType);
-	TechnoTypeExt::ExtData * pTypeData = TechnoTypeExt::ExtMap.Find(pTechnoType);
+	TechnoTypeExt::ExtData * pTypeData = TechnoTypeExt::ExtMap.FindInMap(pTechnoType);
 
 	if(pTypeData) {
 		INI_EX exINI(pINI);
@@ -39,7 +39,7 @@ DEFINE_HOOK(0x5F9070, ObjectTypeClass_Load2DArt, 0x0)
 {
 	GET(ObjectTypeClass* const, pType, ECX);
 
-	auto const pTypeData = TechnoTypeExt::ExtMap.Find(static_cast<TechnoTypeClass*>(pType));
+	auto const pTypeData = TechnoTypeExt::ExtMap.FindInMap(static_cast<TechnoTypeClass*>(pType));
 
 	char basename[MAX_PATH];
 

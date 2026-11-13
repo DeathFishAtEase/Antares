@@ -35,6 +35,8 @@
 #include <algorithm>
 #include <utility>
 
+static_assert(offsetof(TechnoClass, align_154) == TechnoExt::ExtPointerOffset);
+
 TechnoExt::ExtContainer TechnoExt::ExtMap;
 
 int TechnoExt::NeedsRegap = 0;

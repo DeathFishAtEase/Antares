@@ -14,6 +14,8 @@
 #include <VocClass.h>
 #include <WarheadTypeClass.h>
 
+static_assert(offsetof(TechnoTypeClass, align_2FC) == TechnoTypeExt::ExtPointerOffset);
+
 TechnoTypeExt::ExtContainer TechnoTypeExt::ExtMap;
 
 // =============================
@@ -637,7 +639,7 @@ const char* TechnoTypeExt::ExtData::GetSelectionGroupID() const
 
 const char* TechnoTypeExt::GetSelectionGroupID(ObjectTypeClass* pType)
 {
-	if(auto pExt = TechnoTypeExt::ExtMap.Find(static_cast<TechnoTypeClass*>(pType))) {
+	if(auto pExt = TechnoTypeExt::ExtMap.FindInMap(static_cast<TechnoTypeClass*>(pType))) {
 		return pExt->GetSelectionGroupID();
 	}
 

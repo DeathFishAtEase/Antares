@@ -50,6 +50,8 @@ class TechnoTypeExt
 {
 public:
 	using base_type = TechnoTypeClass;
+	// Ares 3.0p1 stores the extension in TechnoTypeClass::align_2FC.
+	static constexpr size_t ExtPointerOffset = 0x2FC;
 
 	enum class SpotlightAttachment {
 		Body, Turret, Barrel

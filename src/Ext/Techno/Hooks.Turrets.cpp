@@ -113,7 +113,7 @@ DEFINE_HOOK(0x5F8084, ObjectTypeClass_UnloadTurretArt, 0x6)
 {
 	GET(ObjectTypeClass* const, pThis, ECX);
 
-	if(auto const pExt = TechnoTypeExt::ExtMap.Find(static_cast<TechnoTypeClass*>(pThis))) {
+	if(auto const pExt = TechnoTypeExt::ExtMap.FindInMap(static_cast<TechnoTypeClass*>(pThis))) {
 		for(auto& voxel : pExt->Turrets) {
 			ClearVoxel(voxel);
 		}

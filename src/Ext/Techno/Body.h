@@ -26,6 +26,8 @@ class TechnoExt
 {
 public:
 	using base_type = TechnoClass;
+	// Ares 3.0p1 stores the extension in TechnoClass::align_154.
+	static constexpr size_t ExtPointerOffset = 0x154;
 
 	class ExtData final : public Extension<TechnoClass, ExtData>
 	{
