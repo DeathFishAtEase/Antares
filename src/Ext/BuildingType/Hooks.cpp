@@ -131,7 +131,9 @@ DEFINE_HOOK(0x45ECE0, BuildingTypeClass_GetMaxPips, 0x6)
 DEFINE_HOOK(0x45F2B4, BuildingTypeClass_Load2DArt_BuildupTime, 0x5)
 {
 	GET(BuildingTypeClass* const, pThis, EBP);
-	auto const pExt = BuildingTypeExt::ExtMap.Find(pThis);
+	// Load2DArt also runs inside Load, before the extension load suffix.
+	// Rebind the slot overwritten by the engine's raw data (Ares 0x100104F0).
+	auto const pExt = BuildingTypeExt::ExtMap.FindOrAllocate(pThis);
 	pExt->UpdateBuildupFrames();
 	return 0x45F310;
 }

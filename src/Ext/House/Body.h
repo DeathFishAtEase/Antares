@@ -25,6 +25,8 @@ class HouseExt
 {
 public:
 	using base_type = HouseClass;
+	// Ares 3.0p1 caches HouseExt in the engine's reserved DWORD.
+	static constexpr size_t ExtPointerOffset = 0x16084;
 
 	// the passengers currently inside one tunnel network of this house
 	struct TunnelData {

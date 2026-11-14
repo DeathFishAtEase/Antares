@@ -11,6 +11,8 @@
 
 BuildingTypeExt::ExtContainer BuildingTypeExt::ExtMap;
 
+static_assert(offsetof(BuildingTypeClass, align_E24) == BuildingTypeExt::ExtPointerOffset);
+
 std::vector<std::string> BuildingTypeExt::ExtData::trenchKinds;
 const CellStruct BuildingTypeExt::FoundationEndMarker = {0x7FFF, 0x7FFF};
 

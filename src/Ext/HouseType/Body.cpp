@@ -14,6 +14,10 @@
 
 HouseTypeExt::ExtContainer HouseTypeExt::ExtMap;
 
+// align_C4 is protected in YRpp; anchor its offset to the public neighbors.
+static_assert(offsetof(HouseTypeClass, ColorSchemeIndex) + sizeof(int) == HouseTypeExt::ExtPointerOffset);
+static_assert(offsetof(HouseTypeClass, FirepowerMult) == HouseTypeExt::ExtPointerOffset + sizeof(DWORD));
+
 void HouseTypeExt::ExtData::InitializeConstants() {
 	const char* pID = this->OwnerObject()->ID;
 

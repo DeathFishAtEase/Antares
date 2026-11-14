@@ -30,6 +30,9 @@
 
 WarheadTypeExt::ExtContainer WarheadTypeExt::ExtMap;
 
+static_assert(offsetof(WarheadTypeClass, MinDebris) + sizeof(int) == WarheadTypeExt::ExtPointerOffset);
+static_assert(sizeof(WarheadTypeClass) == WarheadTypeExt::ExtPointerOffset + sizeof(DWORD));
+
 AresMap<IonBlastClass*, const WarheadTypeExt::ExtData*> WarheadTypeExt::IonExt;
 
 WarheadTypeClass * WarheadTypeExt::Temporal_WH = nullptr;

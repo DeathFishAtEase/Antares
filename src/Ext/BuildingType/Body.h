@@ -25,6 +25,8 @@ class BuildingTypeExt
 {
 public:
 	using base_type = BuildingTypeClass;
+	// Ares 3.0p1 uses BuildingTypeClass::align_E24 as its extension slot.
+	static constexpr size_t ExtPointerOffset = 0xE24;
 
 	static const Foundation CustomFoundation = static_cast<Foundation>(0x7F);
 	static const CellStruct FoundationEndMarker;

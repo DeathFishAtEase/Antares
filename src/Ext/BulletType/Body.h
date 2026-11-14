@@ -18,6 +18,8 @@ class BulletTypeExt
 {
 public:
 	using base_type = BulletTypeClass;
+	// Ares 3.0p1 stores the extension in the padding before Elasticity.
+	static constexpr size_t ExtPointerOffset = 0x2C4;
 
 	class ExtData final : public Extension<BulletTypeClass, ExtData>
 	{

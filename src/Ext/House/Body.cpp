@@ -26,6 +26,8 @@
 
 HouseExt::ExtContainer HouseExt::ExtMap;
 
+static_assert(offsetof(HouseClass, unknown_16084) == HouseExt::ExtPointerOffset);
+
 bool HouseExt::IsAnyFirestormActive = false;
 
 CDTimerClass HouseExt::Timer_CloakedUnitDetected;

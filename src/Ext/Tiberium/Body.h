@@ -12,6 +12,8 @@ class TiberiumExt
 {
 public:
 	using base_type = TiberiumClass;
+	// Ares 3.0p1 stores the extension in the padding before GrowthPercentage.
+	static constexpr size_t ExtPointerOffset = 0xAC;
 
 	class ExtData final : public Extension<TiberiumClass, ExtData>
 	{

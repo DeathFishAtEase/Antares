@@ -6,6 +6,9 @@
 //Static init
 TiberiumExt::ExtContainer TiberiumExt::ExtMap;
 
+static_assert(offsetof(TiberiumClass, Growth) + sizeof(int) == TiberiumExt::ExtPointerOffset);
+static_assert(offsetof(TiberiumClass, GrowthPercentage) == TiberiumExt::ExtPointerOffset + sizeof(DWORD));
+
 void TiberiumExt::ExtData::LoadFromINIFile(CCINIClass* pINI)
 {
 	const char* section = this->OwnerObject()->get_ID();

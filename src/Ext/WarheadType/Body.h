@@ -31,6 +31,8 @@ class WarheadTypeExt
 {
 public:
 	using base_type = WarheadTypeClass;
+	// Ares 3.0p1 caches the extension in WarheadTypeClass::unused_1CC.
+	static constexpr size_t ExtPointerOffset = 0x1CC;
 
 	struct VersesData {
 		double Verses{ 1.0 };

@@ -18,6 +18,8 @@ class HouseTypeExt
 {
 public:
 	using base_type = HouseTypeClass;
+	// Ares 3.0p1 stores the extension in HouseTypeClass::align_C4.
+	static constexpr size_t ExtPointerOffset = 0xC4;
 
 	class ExtData final : public Extension<HouseTypeClass, ExtData>
 	{

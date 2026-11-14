@@ -10,6 +10,9 @@
 
 BulletTypeExt::ExtContainer BulletTypeExt::ExtMap;
 
+static_assert(offsetof(BulletTypeClass, Vertical) == BulletTypeExt::ExtPointerOffset - sizeof(DWORD));
+static_assert(offsetof(BulletTypeClass, Elasticity) == BulletTypeExt::ExtPointerOffset + sizeof(DWORD));
+
 // =============================
 // member funcs
 
