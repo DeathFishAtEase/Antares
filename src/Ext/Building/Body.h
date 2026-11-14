@@ -17,6 +17,8 @@ class BuildingExt
 {
 public:
 	using base_type = BuildingClass;
+	// Ares 3.0p1 uses the final reserved DWORD of the engine object.
+	static constexpr size_t ExtPointerOffset = 0x71C;
 
 	class ExtData;
 

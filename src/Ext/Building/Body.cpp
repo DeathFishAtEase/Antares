@@ -1332,6 +1332,9 @@ DEFINE_HOOK(0x454244, BuildingClass_Save_Suffix, 0x7)
 	return 0;
 }
 
+static_assert(offsetof(BuildingClass, TankBunkerState) + sizeof(TankBunkerState) == BuildingExt::ExtPointerOffset);
+static_assert(sizeof(BuildingClass) == BuildingExt::ExtPointerOffset + sizeof(DWORD));
+
 static_assert(sizeof(BuildingExt::cPrismForwarding) == 0x30, "cPrismForwarding must match the 3.0p1 layout");
 
 // the reserves are swapped against 0.A, which is what shrinks the struct to 0x30
