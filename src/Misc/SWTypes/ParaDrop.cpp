@@ -328,7 +328,9 @@ void SW_ParaDrop::SendPDPlane(HouseClass* pOwner, CellClass* pTarget, AircraftTy
 	auto const spawn_crd = CellClass::Cell2Coord(spawn_cell);
 
 	++Unsorted::ScenarioInit;
-	auto const bSpawned = pPlane->Unlimbo(spawn_crd, DirType::North);
+	// Ares 0x10075250 faces the plane inward from its selected map edge.
+	auto const facing = static_cast<DirType>(((static_cast<int>(edge) - 2) & 3) << 6);
+	auto const bSpawned = pPlane->Unlimbo(spawn_crd, facing);
 	--Unsorted::ScenarioInit;
 
 	if(!bSpawned) {
