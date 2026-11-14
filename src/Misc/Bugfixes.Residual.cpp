@@ -47,7 +47,11 @@ DEFINE_HOOK(0x4D5782, FootClass_ApproachTarget_Passive, 0x6)
 {
 	GET(FootClass* const, pThis, EBX);
 
-	R->ECX(pThis->ShouldLoseTargetNow || pThis->InOpenToppedTransport);
+	// YR only initializes and reads the byte at +0x50C. YRpp declares
+	// a DWORD here, whose upper three bytes can contain unrelated heap data.
+	auto const shouldLoseTarget =
+		*reinterpret_cast<BYTE const*>(&pThis->ShouldLoseTargetNow) != 0;
+	R->ECX(shouldLoseTarget || pThis->InOpenToppedTransport);
 
 	return 0x4D5788;
 }
