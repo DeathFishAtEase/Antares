@@ -426,19 +426,30 @@ Iterator<BuildingTypeClass*> HouseTypeExt::ExtData::GetPowerplants() const {
 
 Iterator<BuildingTypeClass*> HouseTypeExt::ExtData::GetDefaultPowerplants() const {
 	BuildingTypeClass** ppPower = nullptr;
+	unsigned int count = 1u;
 	switch(this->OwnerObject()->SideIndex) {
 	case 0:
 		ppPower = &RulesClass::Instance->GDIPowerPlant;
 		break;
 	case 1:
 		ppPower = &RulesClass::Instance->NodRegularPower;
+		// Ares 0x1001C330 offers both adjacent Soviet plants when present.
+		static_assert(offsetof(RulesClass, NodAdvancedPower)
+			== offsetof(RulesClass, NodRegularPower) + sizeof(BuildingTypeClass*));
+		if(*ppPower) {
+			count += RulesClass::Instance->NodAdvancedPower != nullptr;
+		} else {
+			ppPower = &RulesClass::Instance->NodAdvancedPower;
+		}
 		break;
 	case 2:
 		ppPower = &RulesClass::Instance->ThirdPowerPlant;
 		break;
 	}
 
-	unsigned int count = (ppPower && *ppPower) ? 1u : 0u;
+	if(!ppPower || !*ppPower) {
+		count = 0u;
+	}
 	return Iterator<BuildingTypeClass*>(ppPower, count);
 }
 
