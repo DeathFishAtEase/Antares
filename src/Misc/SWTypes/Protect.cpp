@@ -63,6 +63,8 @@ void SW_Protect::Initialize(SWTypeExt::ExtData *pData)
 		pData->EVA_Detected = VoxClass::FindIndex("EVA_IronCurtainDetected");
 		pData->EVA_Activated = VoxClass::FindIndex("EVA_IronCurtainActivated");
 
+		pData->SW_AITargetingType = SuperWeaponAITargetingMode::IronCurtain;
+
 		pData->SW_Cursor = MouseCursorType::IronCurtain;
 	}
 }
