@@ -188,12 +188,10 @@ void AttachEffectClass::UninitAnim::operator() (AnimClass* const pAnim) const {
 }
 
 void AttachEffectClass::InvalidatePointer(void* ptr) {
-	if(this->Invoker == ptr) {
-		this->Invoker = nullptr;
-	}
-
 	if(this->Animation == ptr) {
-		this->KillAnim();
+		// The animation is already expiring. Drop the reference without
+		// invoking its deleter and destroying it a second time.
+		this->Animation.release();
 	}
 }
 

@@ -151,8 +151,8 @@ public:
 		// when any pointer in the game expires, this is called - be sure to tell everyone we own to invalidate it
 		void InvalidatePointer(void *ptr, bool bRemoved) {
 			AnnounceInvalidPointer(this->GarrisonedIn, ptr);
+			AnnounceInvalidPointer(this->EMPSparkleAnim, ptr);
 			this->InvalidateAttachEffectPointer(ptr);
-			AnnounceInvalidPointer(this->MyOriginalTemporal, ptr);
 			AnnounceInvalidPointer(this->Spotlight, ptr);
 		}
 
@@ -211,13 +211,20 @@ public:
 		ExtContainer();
 		~ExtContainer();
 
+		void PointerGotInvalid(void* ptr, bool removed) {
+			this->InvalidatePointer(ptr, removed);
+			// Animation references are handled per owner by the native
+			// TechnoClass_AnimPointerExpired hook, not by a global scan.
+			if(removed && !this->InvalidateExtDataIgnorable(ptr)) {
+				this->InvalidateExtDataPointer(ptr, removed);
+			}
+		}
+
 		bool InvalidateExtDataIgnorable(void* const ptr) const {
 			auto const abs = static_cast<AbstractClass*>(ptr)->WhatAmI();
 			switch(abs) {
 			case AbstractType::Building:
 			case AbstractType::BuildingLight:
-			case AbstractType::Temporal:
-			case AbstractType::Anim:
 			case AbstractType::Aircraft:
 			case AbstractType::Infantry:
 			case AbstractType::Unit:
