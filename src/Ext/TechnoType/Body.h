@@ -585,6 +585,17 @@ public:
 
 	static ExtContainer ExtMap;
 
+	// Native abilities with an already resolved type (Ares 3.0p1 0x10045F20).
+	// Elite units retain the veteran set as well as gaining the elite set.
+	static bool HasAbility(TechnoTypeClass* pType,
+		VeterancyStruct const& veterancy, Ability ability)
+	{
+		if(veterancy.IsElite()) {
+			return pType->VeteranAbilities[ability] || pType->EliteAbilities[ability];
+		}
+		return veterancy.IsVeteran() && pType->VeteranAbilities[ability];
+	}
+
 	static const char* GetSelectionGroupID(ObjectTypeClass* pType);
 	static bool HasSelectionGroupID(ObjectTypeClass* pType, const char* pID);
 

@@ -2003,7 +2003,7 @@ DEFINE_HOOK(0x4D9920, FootClass_SelectAutoTarget_Cloaked, 0x9)
 			allowAquire = false;
 		} else if(!pExt->CanPassiveAcquire_Cloak) {
 			// passive acquire is disallowed when guarding and cloakable
-			if(pThis->IsCloakable() || pThis->HasAbility(Ability::Cloak)) {
+			if(pThis->IsCloakable() || TechnoTypeExt::HasAbility(pType, pThis->Veterancy, Ability::Cloak)) {
 				allowAquire = false;
 			}
 		}

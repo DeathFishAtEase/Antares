@@ -767,7 +767,7 @@ int TechnoExt::ExtData::GetSelfHealAmount() const
 		return 0;
 	}
 
-	if(pType->SelfHealing || pThis->HasAbility(Ability::SelfHeal)) {
+	if(pType->SelfHealing || TechnoTypeExt::HasAbility(pType, pThis->Veterancy, Ability::SelfHeal)) {
 		auto const pExt = TechnoTypeExt::ExtMap.Find(pType);
 
 		auto const rate = pExt->SelfHealing_Rate.Get(
@@ -898,7 +898,7 @@ void TechnoExt::ExtData::CreateInitialPayload()
 bool TechnoExt::CanICloakByDefault(TechnoClass *pTechno) {
 	//Debug::Log("[AttachEffect]Can %s cloak by default?\n", pTechno->get_ID());
 	auto tType = pTechno->GetTechnoType();
-	return tType->Cloakable || pTechno->HasAbility(Ability::Cloak);
+	return tType->Cloakable || TechnoTypeExt::HasAbility(tType, pTechno->Veterancy, Ability::Cloak);
 }
 
 bool TechnoExt::IsCloaked(TechnoClass* pTechno) {
@@ -1530,7 +1530,7 @@ bool TechnoExt::ExtData::IsCloakable(bool allowPassive) const
 	}
 
 	// check for active cloak
-	if(pThis->IsCloakable() || pThis->HasAbility(Ability::Cloak)) {
+	if(pThis->IsCloakable() || TechnoTypeExt::HasAbility(pType, pThis->Veterancy, Ability::Cloak)) {
 		if(this->CanSelfCloakNow()) {
 			return true;
 		}
