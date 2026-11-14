@@ -244,7 +244,11 @@ DEFINE_HOOK(0x4DA53E, FootClass_Update, 0x6)
 {
 	GET(FootClass* const, pThis, ESI);
 
-	if(pThis->IsAlive) {
+	// Without an active firestorm there is no wall to test beneath this foot.
+	// The shipped handler also exempts passengers and firestorm-proof types.
+	if(HouseExt::IsAnyFirestormActive && pThis->IsAlive
+		&& !pThis->InOpenToppedTransport && !pThis->GetTechnoType()->IgnoresFirestorm)
+	{
 		auto const pCell = pThis->GetCell();
 		if(auto const pBld = pCell->GetBuilding()) {
 			if(BuildingExt::IsActiveFirestormWall(pBld)) {
