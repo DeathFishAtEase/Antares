@@ -1644,23 +1644,22 @@ bool TechnoExt::ExtData::CanSelfCloakNow() const
 		return false;
 	}
 
-	auto pType = pThis->GetTechnoType();
-	auto pExt = TechnoTypeExt::ExtMap.Find(pType);
-
-	if(specific_cast<BuildingTypeClass*>(pType)) {
-		if(pExt->CloakPowered && !pThis->IsPowerOnline()) {
-			return false;
-		}
+	// Only buildings and infantry have additional self-cloak conditions.
+	// Use their native type fields instead of resolving the type twice.
+	switch(pThis->WhatAmI()) {
+	case AbstractType::Building: {
+		auto pBuilding = static_cast<BuildingClass*>(pThis);
+		auto pExt = TechnoTypeExt::ExtMap.Find(pBuilding->Type);
+		return !pExt->CloakPowered || pThis->IsPowerOnline();
 	}
-
-	if(auto pInf = specific_cast<InfantryClass*>(pThis)) {
-		if(pExt->CloakDeployed && !pInf->IsDeployed()) {
-			return false;
-		}
+	case AbstractType::Infantry: {
+		auto pInf = static_cast<InfantryClass*>(pThis);
+		auto pExt = TechnoTypeExt::ExtMap.Find(pInf->Type);
+		return !pExt->CloakDeployed || pInf->IsDeployed();
 	}
-
-	// allows cloak
-	return true;
+	default:
+		return true;
+	}
 }
 
 void TechnoExt::ExtData::SetSpotlight(BuildingLightClass* pSpotlight) {
