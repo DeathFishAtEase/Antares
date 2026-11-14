@@ -1545,8 +1545,9 @@ bool TechnoExt::ExtData::IsCloakable(bool allowPassive) const
 		}
 
 		// search for cloak generators
-		CoordStruct crd = pThis->GetCoords();
-		CellClass* pCell = MapClass::Instance.GetCellAt(crd);
+		// Ares checks the cell at Location. A building's GetCoords() is
+		// its foundation center, which can have different cloak coverage.
+		CellClass* pCell = pThis->GetCell();
 		return pCell->CloakGen_InclHouse(pThis->Owner->ArrayIndex);
 	}
 
