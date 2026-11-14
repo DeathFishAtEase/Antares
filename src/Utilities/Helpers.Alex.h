@@ -234,7 +234,8 @@ namespace Helpers {
 					topleft.Y -= static_cast<short>(height / 2);
 
 					auto const rect = LTRBStruct{
-						topleft.X, topleft.Y, topleft.X + width, topleft.Y + height };
+						// CellRectEnumerator includes the right and bottom cells.
+						topleft.X, topleft.Y, topleft.X + width - 1, topleft.Y + height - 1 };
 
 					CellRectIterator<T>{}(rect, std::forward<Func>(action));
 					return true;
