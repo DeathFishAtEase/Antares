@@ -149,7 +149,9 @@ struct PickIonCannonTarget {
 			auto const passedFilter = (!pEnemy || pTechno->Owner == pEnemy);
 
 			if(passedFilter && pOwner->IsIonCannonEligibleTarget(pTechno)) {
-				auto const cell = pTechno->GetMapCoords();
+				// Ares scores the virtual coordinates, which use a building's
+				// center rather than its Location cell.
+				auto const cell = CellClass::Coord2Cell(pTechno->GetCoords());
 				if(!MapClass::Instance.IsWithinUsableArea(cell, true)) {
 					return -1;
 				}
@@ -188,7 +190,7 @@ struct PickIonCannonTarget {
 		});
 
 		if(pResult) {
-			return pResult->GetMapCoords();
+			return CellClass::Coord2Cell(pResult->GetCoords());
 		}
 
 		return CellStruct::Empty;
