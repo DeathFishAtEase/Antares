@@ -20,6 +20,7 @@ class HouseTypeClass;
 class InfantryClass;
 struct SHPStruct;
 class TemporalClass;
+class UnitClass;
 class WarheadTypeClass;
 
 class TechnoExt
@@ -174,8 +175,6 @@ public:
 
 		bool DrawVisualFX() const;
 
-		UnitTypeClass* GetUnitType() const;
-
 		bool IsDeactivated() const;
 
 		void InvalidateAttachEffectPointer(void *ptr);
@@ -238,6 +237,7 @@ public:
 	};
 
 	static ExtContainer ExtMap;
+	static UnitTypeClass* GetWaterImage(UnitClass* pUnit);
 	static bool LoadGlobals(AresStreamReader& Stm);
 	static bool SaveGlobals(AresStreamWriter& Stm);
 

@@ -116,7 +116,6 @@ DEFINE_HOOK(0x73B4A0, UnitClass_DrawVXL_WaterType, 0x9)
 {
 	R->ESI(0);
 	GET(UnitClass *, U, EBP);
-	TechnoExt::ExtData *pData = TechnoExt::ExtMap.Find(U);
 
 	ObjectTypeClass * Image = U->Type;
 
@@ -130,7 +129,7 @@ DEFINE_HOOK(0x73B4A0, UnitClass_DrawVXL_WaterType, 0x9)
 		}
 	}
 
-	if(UnitTypeClass * pCustomType = pData->GetUnitType()) {
+	if(UnitTypeClass * pCustomType = TechnoExt::GetWaterImage(U)) {
 		Image = pCustomType;
 	}
 
@@ -142,11 +141,10 @@ DEFINE_HOOK(0x73B4A0, UnitClass_DrawVXL_WaterType, 0x9)
 DEFINE_HOOK(0x73C5FC, UnitClass_DrawSHP_WaterType, 0x6)
 {
 	GET(UnitClass *, U, EBP);
-	TechnoExt::ExtData *pData = TechnoExt::ExtMap.Find(U);
 
 	SHPStruct * Image = U->GetImage();
 
-	if(UnitTypeClass * pCustomType = pData->GetUnitType()) {
+	if(UnitTypeClass * pCustomType = TechnoExt::GetWaterImage(U)) {
 		Image = pCustomType->GetImage();
 	}
 
@@ -162,9 +160,8 @@ DEFINE_HOOK_AGAIN(0x73C702, UnitClass_DrawSHP_ChangeType1, 0x6)
 DEFINE_HOOK(0x73C655, UnitClass_DrawSHP_ChangeType1, 0x6)
 {
 	GET(UnitClass *, U, EBP);
-	TechnoExt::ExtData *pData = TechnoExt::ExtMap.Find(U);
 
-	if(UnitTypeClass * pCustomType = pData->GetUnitType()) {
+	if(UnitTypeClass * pCustomType = TechnoExt::GetWaterImage(U)) {
 		R->ECX<UnitTypeClass *>(pCustomType);
 		return R->Origin() + 6;
 	}

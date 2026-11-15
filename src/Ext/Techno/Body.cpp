@@ -460,12 +460,10 @@ bool TechnoExt::ExtData::AcquireHunterSeekerTarget() const {
 	return false;
 }
 
-UnitTypeClass* TechnoExt::ExtData::GetUnitType() const {
-	if(auto pUnit = abstract_cast<UnitClass*>(this->OwnerObject())) {
-		auto pData = TechnoTypeExt::ExtMap.Find(pUnit->Type);
-		if(pData->WaterImage && !pUnit->OnBridge && pUnit->GetCell()->LandType == LandType::Water) {
-			return pData->WaterImage;
-		}
+UnitTypeClass* TechnoExt::GetWaterImage(UnitClass* pUnit) {
+	auto pData = TechnoTypeExt::ExtMap.Find(pUnit->Type);
+	if(pData->WaterImage && !pUnit->OnBridge && pUnit->GetCell()->LandType == LandType::Water) {
+		return pData->WaterImage;
 	}
 	return nullptr;
 }
